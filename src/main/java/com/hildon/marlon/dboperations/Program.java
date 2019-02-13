@@ -1,4 +1,4 @@
-package com.hildon.marlon.application;
+package com.hildon.marlon.dboperations;
 
 import com.hildon.marlon.model.entities.Department;
 
