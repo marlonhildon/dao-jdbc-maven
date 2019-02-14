@@ -51,17 +51,9 @@ public class SellerDaoJDBC implements SellerDao {
 			
 			st.setInt(1, id);
 			rs = st.executeQuery();
-			if (rs.next()) {	// Se existir alguém com essa ID, retorne o objeto com os dados da tabela.
-				Department dep = new Department();	// O modelo DAO exige que toda tabela seja passada como objeto.
-				dep.setId(rs.getInt("DepartmentId"));
-				dep.setName(rs.getString("DepName"));
-				Seller obj = new Seller();
-				obj.setId(rs.getInt("Id"));
-				obj.setName(rs.getString("Name"));
-				obj.setEmail("Email");
-				obj.setBaseSalary(rs.getDouble("BaseSalary"));
-				obj.setBirthDate(rs.getDate("BirthDate"));
-				obj.setDepartment(dep);
+			if (rs.next()) {	// Se existir alguém com essa ID, retorne o objeto com os dados da tabela (o modelo DAO exige isso).
+				Department dep = instantiateDepartment(rs);
+				Seller obj = instantiateSeller(rs, dep);
 				return obj;
 			}
 			return null;	//Caso não exista alguém com essa ID, retorne nulo.
@@ -75,11 +67,27 @@ public class SellerDaoJDBC implements SellerDao {
 		}
 	}
 
+	private Seller instantiateSeller(ResultSet rs, Department dep) throws SQLException {
+		Seller obj = new Seller();
+		obj.setId(rs.getInt("Id"));
+		obj.setName(rs.getString("Name"));
+		obj.setEmail("Email");
+		obj.setBaseSalary(rs.getDouble("BaseSalary"));
+		obj.setBirthDate(rs.getDate("BirthDate"));
+		obj.setDepartment(dep);
+		return obj;
+	}
+
+	private Department instantiateDepartment(ResultSet rs) throws SQLException { // O método que chama este já trata o SQLException.
+		Department dep = new Department();	
+		dep.setId(rs.getInt("DepartmentId"));
+		dep.setName(rs.getString("DepName"));
+		return dep;
+	}
+
 	@Override
 	public List<Seller> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
 }
