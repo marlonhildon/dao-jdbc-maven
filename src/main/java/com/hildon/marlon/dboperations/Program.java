@@ -1,7 +1,10 @@
 package com.hildon.marlon.dboperations;
 
+import java.util.List;
+
 import com.hildon.marlon.model.dao.DaoFactory;
 import com.hildon.marlon.model.dao.SellerDao;
+import com.hildon.marlon.model.entities.Department;
 import com.hildon.marlon.model.entities.Seller;
 
 public class Program {
@@ -14,6 +17,13 @@ public class Program {
 		Seller seller = sellerDao.findById(3);
 		
 		System.out.println(seller);
+		
+		System.out.println("\n=== TEST 2: seller findByDepartment ===");
+		Department department = new Department(2, null);
+		List<Seller> list = sellerDao.findByDepartment(department);
+		for (Seller obj : list) {
+			System.out.println(obj);
+		}
 	}
 
 }

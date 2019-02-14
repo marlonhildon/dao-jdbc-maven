@@ -2,6 +2,7 @@ package com.hildon.marlon.model.dao;
 
 import java.util.List;
 
+import com.hildon.marlon.model.entities.Department;
 import com.hildon.marlon.model.entities.Seller;
 
 public interface SellerDao {
@@ -11,4 +12,5 @@ public interface SellerDao {
 	void deleteById(Seller id);
 	Seller findById(Integer id);
 	List<Seller> findAll();
+	List<Seller> findByDepartment(Department department);
 }
